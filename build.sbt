@@ -93,6 +93,8 @@ PB.protobufSettings
 PB.runProtoc in PB.protobufConfig := (args =>
   com.github.os72.protocjar.Protoc.runProtoc("-v300" +: args.toArray))
 
+scalaSource in PB.protobufConfig <<= (sourceDirectory in Compile)(_ / "generated-proto")
+
 // build info configuration //
 buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion)
 

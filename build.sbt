@@ -1,6 +1,6 @@
-name := "demo-akka-persistence-jdbc"
+name := "akka-persistence-jdbc-learning"
 
-organization := "com.github.dnvriend"
+organization := "com.github.gyoho"
 
 version := "1.0.0"
 

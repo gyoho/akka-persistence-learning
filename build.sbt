@@ -1,25 +1,8 @@
-/*
- * Copyright 2016 Dennis Vriend
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 name := "demo-akka-persistence-jdbc"
 
 organization := "com.github.dnvriend"
 
 version := "1.0.0"
-
-scalaVersion := "2.11.8"
 
 // the akka-persistence-jdbc plugin lives here
 resolvers += Resolver.jcenterRepo
@@ -41,7 +24,7 @@ libraryDependencies ++= {
     "com.lihaoyi" %% "pprint" % "0.4.1",
     "org.scalaz" %% "scalaz-core" % "7.2.3",
     "com.twitter" %% "chill-akka" % "0.8.0",
-    "com.github.dnvriend" %% "akka-persistence-jdbc" % akkaPersistenceJdbcVersion changing(),
+    "com.github.dnvriend" %% "akka-persistence-jdbc" % akkaPersistenceJdbcVersion changing (),
     "ch.qos.logback" % "logback-classic" % "1.1.7",
     "org.postgresql" % "postgresql" % "9.4.1208",
     "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % Test,
@@ -53,13 +36,12 @@ fork in Test := true
 
 parallelExecution in Test := false
 
-scalacOptions ++= Seq("-feature", "-language:higherKinds", "-language:implicitConversions", "-deprecation", "-Ybackend:GenBCode", "-Ydelambdafy:method", "-target:jvm-1.8")
-
-licenses +=("Apache-2.0", url("http://opensource.org/licenses/apache2.0.php"))
+licenses += ("Apache-2.0", url("http://opensource.org/licenses/apache2.0.php"))
 
 // enable scala code formatting //
 import scalariform.formatter.preferences._
 import com.typesafe.sbt.SbtScalariform
+import sbtbuildinfo.BuildInfoOption.BuildTime
 
 // Scalariform settings
 SbtScalariform.autoImport.scalariformPreferences := SbtScalariform.autoImport.scalariformPreferences.value
@@ -93,12 +75,23 @@ PB.protobufSettings
 PB.runProtoc in PB.protobufConfig := (args =>
   com.github.os72.protocjar.Protoc.runProtoc("-v300" +: args.toArray))
 
-scalaSource in PB.protobufConfig <<= (sourceDirectory in Compile)(_ / "generated-proto")
+scalaSource in PB.protobufConfig <<= (sourceDirectory in Compile)(
+  _ / "generated-proto")
 
 // build info configuration //
-buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion)
+buildInfoKeys := Seq[BuildInfoKey](
+  name,
+  version,
+  scalaVersion,
+  sbtVersion,
+  "branch" -> git.gitCurrentBranch,
+  "commit" -> git.gitHeadCommit
+)
 
 buildInfoPackage := "com.github.dnvriend"
+buildInfoOptions += BuildInfoOption.BuildTime
+buildInfoOptions += BuildInfoOption.ToJson
+
 
 // enable plugins
 enablePlugins(AutomateHeaderPlugin, BuildInfoPlugin)

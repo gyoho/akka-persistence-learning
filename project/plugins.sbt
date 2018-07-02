@@ -15,7 +15,7 @@ addSbtPlugin("de.heikoseeberger" % "sbt-header" % "1.5.1")
 // https://github.com/spray/sbt-revolver
 addSbtPlugin("io.spray" % "sbt-revolver" % "0.8.0")
 
-// generates Scala source from your build definitions //
+// generates Scala source from your build definitions
 // https://github.com/sbt/sbt-buildinfo
 addSbtPlugin("com.eed3si9n" % "sbt-buildinfo" % "0.6.1")
 
@@ -29,3 +29,5 @@ addSbtPlugin("com.trueaccord.scalapb" % "sbt-scalapb" % "0.5.29")
 libraryDependencies ++= Seq(
   "com.github.os72" % "protoc-jar" % "3.0.0-b2.1"
 )
+
+addSbtPlugin("com.typesafe.sbt" % "sbt-git" % "1.0.0")

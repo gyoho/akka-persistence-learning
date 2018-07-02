@@ -2,7 +2,7 @@ postgres:
   image: postgres:latest
   container_name: postgres
   environment:
-    - "TZ=Europe/Amsterdam"
+    - "TZ=America/Los_Angeles"
     - "POSTGRES_USER=docker"
     - "POSTGRES_PASSWORD=docker"
   ports:
